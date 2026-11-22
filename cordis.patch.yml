@@ -1,0 +1,37 @@
+# dsh-plugin-session-guard bundle layer.
+#
+# Every value below is a default. Install-time overrides belong in your own
+# profile patch layer (`$DSH_HOME/profiles/<name>/cordis.patch.yml`), e.g.
+#
+#   - id: session-guard
+#     config:
+#       thresholds: [120, 240]
+#       handoffMode: ask
+#
+# NOTE: cordis.patch.yml is read at Host start; editing this file requires a
+# restart. `index.js` changes reload through HMR.
+- insert:
+    - id: session-guard
+      name: dsh-plugin-session-guard
+      config:
+        # Tool-call counts that trigger a reminder. Not a cost signal by itself.
+        thresholds: [80, 160, 320]
+        # auto = this plugin creates the follow-up session itself
+        # ask  = only prompt the user; the model decides
+        # off  = remind only, never hand off
+        handoffMode: ask
+        # Fallback group when the source session title carries no recognisable group.
+        # Leave empty to skip the handoff instead of guessing.
+        defaultGroup: ''
+        # Daily breaker: at most N automatic handoffs per calendar day, and at
+        # least minGapMs apart. Counter is persisted, so restarts do not reset it.
+        maxHandoffs: 3
+        minGapMs: 1800000
+        # Cost gate: run `<cwd>/tools/session-gate/gate.mjs` before any handoff.
+        # A missing, failing, or timed-out gate means "do not hand off" (fail closed).
+        gateEnabled: true
+        gateMinContext: 180000
+        gateMaxCost: 4
+        gateTimeoutMs: 8000
+        # Daily budget in CNY; over-budget adds one line to the reminder.
+        dailyBudgetCNY: 10

@@ -1,0 +1,53 @@
+{
+  "name": "dsh-plugin-session-guard",
+  "version": "0.1.0",
+  "description": "Cost-aware session guard for DeepSeek Harness: injects a reminder past a tool-call threshold, asks a context/cost gate whether the session is actually expensive, and only then hands off to a fresh session — with a persisted daily breaker and idempotent handoff notes.",
+  "type": "module",
+  "main": "index.js",
+  "exports": {
+    ".": "./index.js",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "index.js",
+    "cordis.patch.yml",
+    "README.md",
+    "README.zh.md",
+    "LICENSE",
+    "tests"
+  ],
+  "keywords": [
+    "deepseek-harness",
+    "dsh",
+    "dsh-plugin",
+    "cordis",
+    "session",
+    "context-management",
+    "cost-control",
+    "handoff"
+  ],
+  "license": "MIT",
+  "author": {
+    "name": "jjp-111",
+    "url": "https://github.com/jjp-111"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jjp-111/dsh-session-guard.git"
+  },
+  "homepage": "https://github.com/jjp-111/dsh-session-guard#readme",
+  "bugs": {
+    "url": "https://github.com/jjp-111/dsh-session-guard/issues"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  },
+  "scripts": {
+    "test": "node tests/session-guard.test.mjs"
+  }
+}
